@@ -1,8 +1,11 @@
-pragma solidity ^0.5.11;
+/**
+ *Submitted for verification at Etherscan.io on 2019-08-05
+*/
 
+pragma solidity ^0.5.10;
 
-/// @title Blocklogy Certificate Gerneration and Verification 
-/// @author Jetso
+/// @title Blocklogy Certificate Gerneration and Verification powered by EraSwap Academy
+/// @author The Team EraSwap
 /// @notice This contract is used for generation and verification of Blocklogy Certificate
 contract BlocklogyCertificate {
     struct Certificate {
@@ -19,11 +22,11 @@ contract BlocklogyCertificate {
     mapping(address => bool) public isAdmin;
 
     event CertificateGenerated (
-        uint256 indexed _certiID,
+        uint256 _certiID,
         uint256 indexed _userId, 
         string _name, 
-        string _course, 
-        uint256 _belt,
+        string indexed _course, 
+        uint256 indexed _belt,
         uint256 _percentile
     );
 
@@ -55,23 +58,23 @@ contract BlocklogyCertificate {
     }
     
     /// @notice views the latest certificate number
-    /// @return latest certificate number issued by the Admin 
+    /// @return latest certificate number issued by Blocklogy 
     function viewLatestCertificateNumber() public view returns (uint256) {
         return certificateDatabase.length-1;
     }
     
     /// @notice views the Total certificate issued
-    /// @return total certificate issued by the Admin in Blockchain
+    /// @return total certificate issued by Blocklogy
     function getTotalCertificateCount() public view returns (uint256) {
         return certificateDatabase.length;
     }
     
-    /// @notice This function will issue the certificate for the course in Blockchain
-    /// @param _userId is the unique ID of each users
-    /// @param _name inputs the name of each users
+    /// @notice This function will issue the certificate for the multiple courses on nextgen technologies
+    /// @param _userId is the unique ID of student
+    /// @param _name inputs the name of student
     /// @param _course inputs the course for which the certificate is issued
     /// @param _belt inputs the belt level of each course in integer
-    /// @param _percentile inputs the percentage which he scored in the exam
+    /// @param _percentile inputs the percentage which student scored in the exam
     /// @return certificate number
     function issueCertificate(
         uint256 _userId, 
@@ -88,7 +91,14 @@ contract BlocklogyCertificate {
             percentile: _percentile
         }));
         
-        emit CertificateGenerated(certificateDatabase.length - 1, _userId, _name, _course, _belt, _percentile);
+        emit CertificateGenerated(
+            certificateDatabase.length - 1, 
+            _userId, 
+            _name, 
+            _course, 
+            _belt, 
+            _percentile
+        );
 
         return certificateDatabase.length - 1;
     }
